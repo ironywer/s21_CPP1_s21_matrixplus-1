@@ -158,15 +158,27 @@ S21Matrix S21Matrix::Minor(int row, int col) {
     throw std::runtime_error("S21Matrix::Minor: Invalid matrix index");
   } else {
     S21Matrix result(rows_ - 1, cols_ - 1);
-    for (int j = 1; j < rows_; j++) {
-      for (int k = 0; k < cols_; k++) {
-        if (k < col) {
-          result.matrix_[j - 1][k] = matrix_[j][k];
-        } else if (k > col) {
-          result.matrix_[j - 1][k - 1] = matrix_[j][k];
+    // for (int j = 1; j < rows_; j++) {
+    //   for (int k = 0; k < cols_; k++) {
+    //     if (k < col) {
+    //       result.matrix_[j - 1][k] = matrix_[j][k];
+    //     } else if (k > col) {
+    //       result.matrix_[j - 1][k - 1] = matrix_[j][k];
+    //     }
+    //   }
+    // }
+    int k = 0;
+    for (int i = 0; i < rows_; i++) {
+      int n = 0;
+      for (int j = 0; j < cols_; j++) {
+        if (i != row && j != col) {
+          result.matrix_[k][n] = matrix_[i][j];
+          n += 1;
         }
       }
+      if (i != row) k += 1;
     }
+
     // result.sprint();
     // std::cout<< result.matrix_[0][0]<<'1';
     return result;
@@ -219,7 +231,7 @@ S21Matrix S21Matrix::CalcComplements() {
   } else {
     for (int i = 0; i < rows_; i++) {
       for (int j = 0; j < cols_; j++) {
-        S21Matrix sub_matrix(result.Minor(i, j));
+        S21Matrix sub_matrix(Minor(i, j));
         result.matrix_[i][j] = sub_matrix.Determinant();
         // Calculate the sign of the complement
         if ((i + j) % 2 == 1) {
@@ -227,6 +239,7 @@ S21Matrix S21Matrix::CalcComplements() {
         }
       }
     }
+    // result.sprint();
   }
   return result;
 }

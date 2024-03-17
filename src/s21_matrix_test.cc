@@ -205,6 +205,30 @@ TEST(LinearAlgebra, InverseMatrixCorrect) {
   EXPECT_DOUBLE_EQ(inverse(0, 1), 1.0);
   EXPECT_DOUBLE_EQ(inverse(1, 0), 1.5);
   EXPECT_DOUBLE_EQ(inverse(1, 1), -0.5);
+
+  S21Matrix matrix2(3, 3);
+
+  matrix2(0, 0) = 1.0;
+  matrix2(0, 1) = 2.0;
+  matrix2(0, 2) = 9.0;
+  matrix2(1, 0) = 3.0;
+  matrix2(1, 1) = 4.0;
+  matrix2(1, 2) = 8.0;
+  matrix2(2, 0) = 7.0;
+  matrix2(2, 1) = 3.0;
+  matrix2(2, 2) = 5.0;
+
+  S21Matrix inverse2 = matrix2.InverseMatrix();
+  // inverse2.sprint();
+  EXPECT_DOUBLE_EQ(inverse2(0, 0), 4. / 93.);
+  EXPECT_DOUBLE_EQ(inverse2(0, 1), -17. / 93.);
+  EXPECT_DOUBLE_EQ(inverse2(0, 2), 20. / 93.);
+  EXPECT_DOUBLE_EQ(inverse2(1, 0), -41. / 93.);
+  EXPECT_DOUBLE_EQ(inverse2(1, 1), 58. / 93.);
+  EXPECT_DOUBLE_EQ(inverse2(1, 2), -19. / 93.);
+  EXPECT_DOUBLE_EQ(inverse2(2, 0), 19. / 93.);
+  EXPECT_DOUBLE_EQ(inverse2(2, 1), -11. / 93.);
+  EXPECT_DOUBLE_EQ(inverse2(2, 2), 2. / 93.);
 }
 
 TEST(LinearAlgebra, Determinant) {
